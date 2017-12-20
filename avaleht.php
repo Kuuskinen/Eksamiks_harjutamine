@@ -32,8 +32,9 @@ if(isset($_GET["logout"])){
 <p>Autoriseerimata ja ebakorrektse ID-ga kasutajad kõrvaldatakse.<p>
 
 <center>
-<h1>Vajuta <a href="https://www.nasa.gov/">SIIA</a> et minna NASA kodulehele.</h1>
+<h4>Vajuta <a href="http://greeny.cs.tlu.ee/~rinde/veebiprogrammeerimine_2017/">siia, et minna õppejõu materjalidesse</a>
 <h4>Sa oled sisselogitud kui: <?php echo $_SESSION["firstname"] ." " .$_SESSION["lastname"]; ?></h4> 
+<h1>Vajuta <a href="https://www.nasa.gov/">SIIA</a> et minna NASA kodulehele.</h1>
 </center>
 
 </body>

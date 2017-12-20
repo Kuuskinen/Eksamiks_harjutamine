@@ -65,7 +65,7 @@ if(isset($_POST["SignUpButton"])){
 		if(empty(["signupFirstName"])){
 			$signupFirstNameError = "Palun sisesta oma nimi!";
 		} else {
-			$signupLastName = Kontroll($_POST["signupLastName"]);
+			$signupFirstName = Kontroll($_POST["signupFirstName"]);
 		}
 	}
 	
