@@ -164,12 +164,13 @@ if(isset($_POST["SignUpButton"])){
 
 	//KOPEERITUD
 	//Tekitame kuupäeva valiku
-    $signupDaySelectHTML = "";
-	$signupDaySelectHTML .= '<select name="signupBirthDay">' ."\n";
-	$signupDaySelectHTML .= '<option value="" selected disabled>päev</option>' ."\n";
-	for ($i = 1; $i < 32; $i ++){
-		if($i == $signupBirthDay){
-			$signupDaySelectHTML .= '<option value="' .$i .'" selected>' .$i .'</option>' ."\n";
+    $signupDaySelectHTML = ""; //alustuseks tühi muutuja
+	$signupDaySelectHTML .= '<select name="signupBirthDay">' ."\n"; //select - rippmenüü, "signupBirthDay" - nimi mis läheb POST-i, \n on reavahetus
+	$signupDaySelectHTML .= '<option value="" selected disabled>päev</option>' ."\n"; //option on 1 valik; selected ütleb, et alguses on valitud option kuni option lõppeb; disabled ütleb, et alguses see pole valitud
+	for ($i = 1; $i < 32; $i ++){ //for tingimus ütleb, et ajutise muutuja i väärtus on 1-st kuni 31-ni
+		if($i == $signupBirthDay){ //tingimus tähendab, et kui see on valitud siis see jääb valituks
+			$signupDaySelectHTML .= '<option value="' .$i .'">' .$i .'</option>' ."\n";
+			//$signupDaySelectHTML .= '<option value="' .$i .'" selected>' .$i .'</option>' ."\n"; 
 		} else {
 			$signupDaySelectHTML .= '<option value="' .$i .'">' .$i .'</option>' ." \n";
 		}
@@ -183,7 +184,8 @@ if(isset($_POST["SignUpButton"])){
 	$signupMonthSelectHTML .= '<option value="" selected disabled>kuu</option>' ."\n";
 	foreach ($monthNamesEt as $key=>$month){
 		if ($key + 1 === $signupBirthMonth){
-			$signupMonthSelectHTML .= '<option value="' .($key + 1) .'" selected>' .$month .'</option>' ."\n";
+			$signupMonthSelectHTML .= '<option value="' .($key + 1) .'">' .$month .'</option>' ."\n";
+			//$signupMonthSelectHTML .= '<option value="' .($key + 1) .'" selected'>' .$month .'</option>' ."\n";
 		} else {
 		$signupMonthSelectHTML .= '<option value="' .($key + 1) .'">' .$month .'</option>' ."\n";
 		}
