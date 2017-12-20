@@ -109,19 +109,43 @@ function signIn($email, $password){
 		echo $arvuti_valik;
 		if($kasutaja_valik == "1" and $arvuti_valik == "2"){
 			$tulemus = "Arvuti võitis!";
+			$tulemuse_statistika = GAME_STAT($tulemus);
 		} elseif($kasutaja_valik == "2" and $arvuti_valik == "3"){
 			$tulemus = "Arvuti võitis!";
+			$tulemuse_statistika = GAME_STAT($tulemus);
 		} elseif($kasutaja_valik == "3" and $arvuti_valik == "1"){
 			$tulemus = "Arvuti võitis!";
+			$tulemuse_statistika = GAME_STAT($tulemus);
 		} elseif($kasutaja_valik == "2" and $arvuti_valik == "1"){
 			$tulemus = "Võitsid!";
+			$tulemuse_statistika = GAME_STAT($tulemus);
 		} elseif($kasutaja_valik == "3" and $arvuti_valik == "2"){
 			$tulemus = "Võitsid!";
+			$tulemuse_statistika = GAME_STAT($tulemus);
 		} elseif($kasutaja_valik == "1" and $arvuti_valik == "3"){
 			$tulemus = "Võitsid!";
+			$tulemuse_statistika = GAME_STAT($tulemus);
 		} else {
 			$tulemus = "Viik!";
+			$tulemuse_statistika = GAME_STAT($tulemus);
 		}
 		return $tulemus;
 	}
+	function GAME_STAT($tulemuse_statistika){
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]);
+		if($tulemuse_statistika == "Arvuti võitis!"){
+			$stmt = $mysqli->prepare("UPDATE statistika SET tulemus = tulemus + 1 WHERE id = 1");
+			$stmt->execute();
+			$stmt->close(); //statement close
+		} elseif($tulemuse_statistika == "Viik!"){
+			$stmt = $mysqli->prepare("UPDATE statistika SET tulemus = tulemus + 1 WHERE id = 2");
+			$stmt->execute();
+			$stmt->close(); //statement close
+		} elseif($tulemuse_statistika == "Võitsid!"){
+			$stmt = $mysqli->prepare("UPDATE statistika SET tulemus = tulemus + 1 WHERE id = 3");
+			$stmt->execute();
+			$stmt->close(); //statement close
+		}
+	}
+	
 ?>
