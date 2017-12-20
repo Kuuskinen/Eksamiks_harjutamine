@@ -32,6 +32,10 @@ if(isset($_POST["GameButton"])){
 </head>  
 
 <body>
+<a href="avaleht.php">Pealeht</a>
+<a href="test.html">test</a>
+<a href="weekdays.php">Nädalapäevad</a>
+<a href="?logout=1">Logi välja</a> <?php //<---- a on link! ?>
 <h1>Siin saad mängida arvuti vastu kivi-paber-kääre.</h1>
 
 <form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
