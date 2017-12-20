@@ -34,6 +34,7 @@
 	$signupEmailError = "";
 	$signupPasswordError = "";
 	$loginEmailError ="";
+	$loginPasswordError = "";
 
 
 //KONTROLLIB, KAS SISSELOGIMISE NUPPU ON VAJUTATUD JA KÄIVITAB VASTAVAD PROTSEDUURID 
@@ -211,19 +212,20 @@ if(isset($_POST["SignUpButton"])){
 <title>CLASSIFIED</title>
 </head>
 <body>
-	<h1>Heade mõtete veeb</h1>
-	<h2>Logi sisse!</h2>
-	<p>Siin harjutame sisselogimise funktsionaalsust.</p>
+	<h1>Salaveeb</h1>
+	<h2>Logimine</h2>
+	<p>SISSELOGIMINE</p>
 	
 	<!--htmlspecialchars trükib välja normaalse tekstina ja tagid ei aktiveeru. -->
 	
 	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-	<!--htmlspecialchars teeb HTML tekstiks. -->
-		<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>
+	<!--htmlspecialchars teeb erimärgid HTML tekstiks. 
+	echo'b aadressiriba lõppu
+	kirjutab lihtsalt aadressiribale leheaadressi ja sellega asi piirdubki!-->
 		<label>Kasutajanimi (E-post): </label>
 		<input name="loginEmail" type="email" value="<?php echo $loginEmail; ?>"><span><?php echo $loginEmailError; ?></span>
 		<br><br>
-		<input name="loginPassword" placeholder="Salasõna" type="password"><span></span>
+		<input name="loginPassword" placeholder="Salasõna" type="password"><span><?php echo $loginPasswordError; ?></span>
 		<br><br>
 		<input name="signInButton" type="submit" value="Logi sisse"><span><?php echo $notice; ?></span>
 	</form>

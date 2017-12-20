@@ -71,27 +71,57 @@ function signIn($email, $password){
 	//------------------------------------------------------------------------
 	
 	//kas klõpsati kinnitamise nuppu
-	if(isset($_POST["confirmButton"])){
+	function MELU($nadalapaevKeel){
+	$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]); //andmebaasi ühendus 
+	$stmt = $mysqli->prepare("SELECT sunday, monday, tuesday, wednesday, thursday, friday, saturday FROM vpnadalapaevad WHERE language = ?");//mida baasist tahame
+	$stmt->bind_param("s", $nadalapaevKeel); // see paneb muutujad andmebaasi käsku
+	$stmt->execute(); // annab käsu korraldus täita
+	$stmt->bind_result($MLyks, $MLkaks, $MLkolm, $MLneli, $MLviis, $MLkuus, $MLseitse); // paneb muutujatesse väärtused
+	$stmt->fetch(); // SEE SIIN ON FETCH, MIS ON KURADI OLULINE! KASUTAME SELLEKS ET TÖÖDELDA ROHKEM KUI ÜHTE RIDA
+	$nadalapaevad = [];
+	array_push($nadalapaevad, $MLyks, $MLkaks, $MLkolm, $MLneli, $MLviis, $MLkuus, $MLseitse); // paigutab andmebaasist saadud andmed järjest listi lõppu 
+	$stmt->close(); // sulgeb statementi
+	return $nadalapaevad; // lõpetab funktsiooni ja tagastab funktsioonis nädalapäevad
 	
-	//kas on keel sisestatud
-			
-	if (isset ($_POST["nadalapaevKeel"])){
-        if (empty ($_POST["nadalapaevKeel"])){ //kui nädalapäev on sisestamata
-            $nadalapaevKeelError =" Sisesta sobiv keel"; //veateade
+	// bind_result on juhtnöör. Kui tehakse fetch (tõmmatakse read alla), siis bind_result paigutab muutujatesse väärtused
+	//array_push vajab AINULT MUUTUJAID, ta ei taha juhtnööre nagu näiteks bind result
+	}
+
+	function VAIN(){
+		$mysqli = new mysqli($GLOBALS["serverHost"], $GLOBALS["serverUsername"], $GLOBALS["serverPassword"], $GLOBALS["database"]); //andmebaasi ühendus 
+		$stmt = $mysqli->prepare("SELECT language FROM vpnadalapaevad"); //mida baasist tahame
+		$stmt->execute(); //käivitab päringu, tõmbav read alla
+		$stmt->bind_result($keel); //paneb keele muutujasse, et kõik keeled jõuaksid listi 
+		$keeled = []; //tühi list
+		while($stmt->fetch() == true){
+		//$stmt->fetch(); Ebavajalik. See on juba while tingimuses (expect the unexcpected)
+		array_push($keeled, $keel); //paneb elemendi listi $keeled lõppu 
+		} //siin lõppeb while-funktsioon 
+		$stmt->close(); //statement close 
+		return $keeled; //tagastab keeled 
+	}
+	
+// -------------------------------------------  MÄNGU FUNKTSIOONID  ---------------------------------------------------
+
+    function GAME($kasutaja_valik){
+		$tulemus = "";
+		$arvuti_valik = mt_rand(1,3);
+		echo $arvuti_valik;
+		if($kasutaja_valik == "1" and $arvuti_valik == "2"){
+			$tulemus = "Arvuti võitis!";
+		} elseif($kasutaja_valik == "2" and $arvuti_valik == "3"){
+			$tulemus = "Arvuti võitis!";
+		} elseif($kasutaja_valik == "3" and $arvuti_valik == "1"){
+			$tulemus = "Arvuti võitis!";
+		} elseif($kasutaja_valik == "2" and $arvuti_valik == "1"){
+			$tulemus = "Võitsid!";
+		} elseif($kasutaja_valik == "3" and $arvuti_valik == "2"){
+			$tulemus = "Võitsid!";
+		} elseif($kasutaja_valik == "1" and $arvuti_valik == "3"){
+			$tulemus = "Võitsid!";
 		} else {
-            $nadalapaevKeel = $_POST["nadalapaevKeel"]; //Posti päringu andmetest nädalapäeva keele 
-            $notice = MELU($nadalapaevKeel); // <--- MELU(sisend) ja $notice muutub nädalapäevade listiks
-            //echo $notice[date("w")];			
-	    }
+			$tulemus = "Viik!";
+		}
+		return $tulemus;
 	}
-	}
-	if(isset($_POST["fiaskoButton"])){
-	    $teade = VAIN(); //päring VAIN funktsioonile, mis küsib keeled
-		$loendur = count($teade); //loendab, mitu keelt on 
-		$loto = mt_rand(0, $loendur-1); // valib saadud vahemikust suvalise keele  
-		$valitud_keel = $teade[$loto]; //valitud keel 
-		// echo $valitud_keel;
-		$teadaanne = MELU($valitud_keel); //teeb saadud keelega päringu MELU funktsioonile, mis annab praeguse nädalapäeva antud keeles
-		//echo $teadaanne[$loto];
-	}	
 ?>
