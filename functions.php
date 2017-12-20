@@ -67,4 +67,31 @@ function signIn($email, $password){
 		$data = htmlspecialchars($data);//eemaldab keelatud märgid
 		return $data;
 	}
+	
+	//------------------------------------------------------------------------
+	
+	//kas klõpsati kinnitamise nuppu
+	if(isset($_POST["confirmButton"])){
+	
+	//kas on keel sisestatud
+			
+	if (isset ($_POST["nadalapaevKeel"])){
+        if (empty ($_POST["nadalapaevKeel"])){ //kui nädalapäev on sisestamata
+            $nadalapaevKeelError =" Sisesta sobiv keel"; //veateade
+		} else {
+            $nadalapaevKeel = $_POST["nadalapaevKeel"]; //Posti päringu andmetest nädalapäeva keele 
+            $notice = MELU($nadalapaevKeel); // <--- MELU(sisend) ja $notice muutub nädalapäevade listiks
+            //echo $notice[date("w")];			
+	    }
+	}
+	}
+	if(isset($_POST["fiaskoButton"])){
+	    $teade = VAIN(); //päring VAIN funktsioonile, mis küsib keeled
+		$loendur = count($teade); //loendab, mitu keelt on 
+		$loto = mt_rand(0, $loendur-1); // valib saadud vahemikust suvalise keele  
+		$valitud_keel = $teade[$loto]; //valitud keel 
+		// echo $valitud_keel;
+		$teadaanne = MELU($valitud_keel); //teeb saadud keelega päringu MELU funktsioonile, mis annab praeguse nädalapäeva antud keeles
+		//echo $teadaanne[$loto];
+	}	
 ?>

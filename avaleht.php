@@ -26,6 +26,7 @@ if(isset($_GET["logout"])){
 <a href="?logout=1">Logi välja</a> <?php //<---- a on link! ?>
 <a href="game.php">Kivi-Paber-Käärid</a>
 <a href="test.html">test</a>
+<a href="Nädalapäevad.php">Nädalapäevad</a>
 <h1>Pealeht</h1>
 <p>See on harjutamiseks tehtud lehekülg<p>
 <p>Autoriseerimata ja ebakorrektse ID-ga kasutajad kõrvaldatakse.<p>
