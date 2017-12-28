@@ -1,16 +1,15 @@
 <?php
 	require("../../config.php");
 	require("functions.php");
-
-	//OLULINE
-	//Kui kasutaja (ehk mina) on juba sisse loginud, siis suunab pealehele
 	
-	if((isset($_SESSION["userId"])) and ($_SESSION["userId"]) == "1"){
-		header("Location: avaleht.php");
+	//OLULINE: KOODIS ON PALJU KOMMENTAARE, MIS EI PEAKS OLEMA, AGA NEED AITAVAD MUL PAREMINI ORIENTEERUDA. VABANDUST!
+	
+	//Kui kasutaja on juba sisse loginud, siis suunatakse pealehele
+	
+	if(isset($_SESSION["userId"])){
+		header("Location: main.php");
 		exit();
 	}
-	
-	//OLULINE
 
 	//KASUTAJA TEGEMISE MUUTUJAD
 	$signupFirstName = "";
@@ -121,7 +120,6 @@ if(isset($_POST["SignUpButton"])){
 			//DATE_CREATE loob uue kuupäeva andmestruktuuri.
 			//DATE_FORMAT teeb sellest stringi.
 			
-			//echo $birthDate;
 		} else {
 			$signupBirthDayError = "Ei ole korrektne kuupäev";
 		}
@@ -154,7 +152,6 @@ if(isset($_POST["SignUpButton"])){
 
      //KUI EELNEVAD KONTROLLID ON TEHTUD, SIIS KIRJUTAME REGISTREERUVA KASUTAJA ANDMEBAASI
 	if (empty($signupFirstNameError) and empty($signupLastNameError) and empty($signupBirthDayError) and empty($genderError) and empty($signupEmailError) and empty($signupPasswordError)){
-			echo "SALVESTAMINE...";
 			//PAROOLI KRÜPTEERIMINE
 			$signupPassword = hash("sha512", $_POST["signupPassword"]);
 			//echo "\n Parooli " .$_POST["signupPassword"] ." räsi on: " .$signupPassword;
@@ -162,8 +159,8 @@ if(isset($_POST["SignUpButton"])){
 	}
 }
 
-	//KOPEERITUD
-	//Tekitame kuupäeva valiku
+	
+	//KUUPÄEVA VALIK
     $signupDaySelectHTML = ""; //alustuseks tühi muutuja
 	$signupDaySelectHTML .= '<select name="signupBirthDay">' ."\n"; //select - rippmenüü, "signupBirthDay" - nimi mis läheb POST-i, \n on reavahetus
 	$signupDaySelectHTML .= '<option value="" selected disabled>päev</option>' ."\n"; //option on 1 valik; selected ütleb, et alguses on valitud option kuni option lõppeb; disabled ütleb, et alguses see pole valitud
@@ -177,7 +174,7 @@ if(isset($_POST["SignUpButton"])){
 	}
 	$signupDaySelectHTML.= "</select> \n";
 	
-	//Tekitame sünnikuu valiku
+	//SÜNNIKUU VALIK
     $signupMonthSelectHTML = "";
 	$monthNamesEt = ["jaanuar", "veebruar", "märts", "aprill", "mai", "juuni", "juuli", "august", "september", "oktoober", "november", "detsember"];
 	$signupMonthSelectHTML .= '<select name="signupBirthMonth">' ."\n";
@@ -192,7 +189,7 @@ if(isset($_POST["SignUpButton"])){
 	}
 	$signupMonthSelectHTML .= "</select> \n";
 	
-	//Tekitame aasta valiku
+	//AASTA VALIK
     $signupYearSelectHTML = "";
 	$signupYearSelectHTML .= '<select name="signupBirthYear">' ."\n";
 	$signupYearSelectHTML .= '<option value="" selected disabled>aasta</option>' ."\n";
@@ -205,18 +202,18 @@ if(isset($_POST["SignUpButton"])){
 		}	
 	}
 	$signupYearSelectHTML.= "</select> \n";
-//<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); 
+ 
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-<title>CLASSIFIED</title>
+<title>Sõidupäevik</title>
 </head>
 <body>
-	<h1>Salaveeb</h1>
+	<h1>Sõidupäeviku portaal</h1>
 	<h2>Logimine</h2>
-	<p>SISSELOGIMINE</p>
+	<p>Kui oled juba registreerunud kasutaja, siis palun logi sisse.</p>
 	
 	<!--htmlspecialchars trükib välja normaalse tekstina ja tagid ei aktiveeru. -->
 	
@@ -233,7 +230,7 @@ if(isset($_POST["SignUpButton"])){
 	</form>
 	
 	<h2>Loo kasutaja</h2>
-	<p>ÄRA TEE KASUTAJAT!</p>
+	<p>Kui sul kasutajat veel ei ole...</p>
 	
 	<form method="POST" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
 		<label>Eesnimi </label>
@@ -272,4 +269,3 @@ if(isset($_POST["SignUpButton"])){
 		
 </body>
 </html>
-	
